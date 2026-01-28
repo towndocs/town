@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Town Reference // v2.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #050505;
+      --sidebar: #0a0a0a;
+      --border: #262626;
+      --border-hover: #404040;
+      
+      --card-bg: #0a0a0a;
+      --card-hover: #121212;
+      
+      --text-primary: #ededed;
+      --text-secondary: #a1a1aa;
+      --text-tertiary: #52525b;
+      
+      --accent: #ffffff;
+      
+      --radius: 6px;
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --transition: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      display: flex;
+      height: 100vh;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      overflow: hidden;
+    }
+
+    /* --- WELCOME MODAL --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s var(--transition);
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      animation: modalSlide 0.4s var(--transition);
+    }
+
+    @keyframes modalSlide {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal h2 {
+      margin: 0 0 16px 0;
+      font-size: 22px;
+      font-weight: 600;
+      border: none;
+      padding: 0;
+    }
+
+    .modal p {
+      color: var(--text-secondary);
+      margin: 0 0 24px 0;
+      line-height: 1.7;
+    }
+
+    .modal-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s var(--transition);
+      width: 100%;
+    }
+
+    .modal-btn:hover {
+      background: #e5e5e5;
+      transform: translateY(-2px);
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      flex-shrink: 0;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .brand {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.3s var(--transition);
+    }
+    
+    .brand span {
+      background: #333;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      padding-left: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      text-align: left;
+      padding: 10px 12px;
+      cursor: pointer;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s var(--transition);
+      margin-bottom: 4px;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-primary);
+      background: #171717;
+      transform: translateX(4px);
+    }
+
+    .nav-btn.active {
+      background: #1e1e1e;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    /* --- MAIN CONTENT --- */
+    .content {
+      flex: 1;
+      padding: 64px 80px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.03em;
+      animation: slideDown 0.5s var(--transition);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 48px;
+      animation: slideDown 0.6s var(--transition);
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 48px 0 20px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn 0.8s var(--transition);
+    }
+
+    /* --- DATA GRID --- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    /* --- CARDS --- */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.3s var(--transition);
+      display: flex;
+      flex-direction: column;
+      animation: cardPop 0.4s var(--transition) both;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      background: var(--card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* --- UI ELEMENTS --- */
+    .key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-bottom: 2px solid #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--text-primary);
+      transition: transform 0.2s;
+    }
+
+    .card:hover .key {
+      transform: scale(1.1);
+    }
+
+    .code-block {
+      margin-top: 12px;
+      background: #000;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover .code-block {
+      border-color: #333;
+    }
+
+    .code-cmd {
+      color: #fff;
+      position: relative;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Standardized Required Badge */
+    .badge-req {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .badge-destructive {
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .badge-info {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-tertiary);
+    }
+
+    a {
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      transition: all 0.2s;
+    }
+    
+    a:hover {
+      border-bottom-color: #fff;
+      color: #fff;
+    }
+
+    /* --- IMAGE GALLERY --- */
+    .gallery-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0;
+      overflow: hidden;
+      transition: all 0.3s var(--transition);
+      animation: cardPop 0.4s var(--transition) both;
+    }
+
+    .gallery-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
+    }
+
+    .gallery-viewer {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: imageZoom 0.3s var(--transition);
+    }
+
+    @keyframes imageZoom {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .gallery-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gallery-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s var(--transition);
+    }
+
+    .gallery-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .gallery-counter {
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-family: var(--font-mono);
+    }
+
+    .gallery-info {
+      padding: 20px;
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .gallery-title {
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .gallery-stats {
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .stat-badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .gallery-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* --- ABOUT PAGE --- */
+    .about-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      animation: cardPop 0.4s var(--transition) both;
+    }
+
+    .about-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .about-details h3 {
+      margin: 0 0 4px 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .about-details .age {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .about-bio {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes cardPop {
+      from { opacity: 0; transform: scale(0.98) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Staggered Grid Item Animations */
+    .grid > div:nth-child(1) { animation-delay: 0.1s; }
+    .grid > div:nth-child(2) { animation-delay: 0.15s; }
+    .grid > div:nth-child(3) { animation-delay: 0.2s; }
+    .grid > div:nth-child(4) { animation-delay: 0.25s; }
+    .grid > div:nth-child(5) { animation-delay: 0.3s; }
+    .grid > div:nth-child(6) { animation-delay: 0.35s; }
+
+    /* --- PAGE LOGIC --- */
+    .page {
+      display: none;
+    }
+    
+    .page.active {
+      display: block;
+    }
+
+    .footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 40px;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px;
+      }
+
+      .content {
+        padding: 32px 24px;
+      }
+
+      .gallery-viewer {
+        aspect-ratio: 4/3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome Modal -->
+  <div class="modal-overlay" id="welcomeModal">
+    <div class="modal">
+      <h2>Welcome to Town Documentation</h2>
+      <p>Welcome to the town documentations and builds / advice / hotkeys. This website was created and coded by <strong>@depentict</strong> on Roblox.</p>
+      <button class="modal-btn" onclick="closeModal()">Get Started</button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="brand">Town Docs <span>v2.0</span></div>
+    
+    <div class="nav-label">General</div>
+    <button class="nav-btn active" onclick="switchTab('plots', this)">Plots & Commands</button>
+    
+    <div class="nav-label" style="margin-top: 16px;">Tools</div>
+    <button class="nav-btn" onclick="switchTab('f3x', this)">F3X Reference</button>
+
+    <div class="nav-label" style="margin-top: 16px;">Other</div>
+    <button class="nav-btn" onclick="switchTab('mybuilds', this)">My Builds + Projects</button>
+    <button class="nav-btn" onclick="switchTab('otherbuilds', this)">Other Peoples Builds</button>
+    <button class="nav-btn" onclick="switchTab('about', this)">About Me</button>
+  </div>
+
+  <div class="content">
+    <div class="container">
+      <h1>Documentation</h1>
+      <div class="subtitle">Official reference for environmental construction. Maintained by <b>@depentict</b>.</div>
+
+      <!-- PLOTS PAGE -->
+      <div id="plots" class="page active">
+        
+        <div class="card" style="margin-bottom: 24px; animation-delay: 0.05s;">
+          <div class="card-top">
+            <span class="card-title">Group Authentication</span>
+            <span class="badge badge-req">Required</span>
+          </div>
+          <div class="card-desc">
+            Verified membership in the Hapless Studios datalink is mandatory for plot initialization.
+            <br><br>
+            <a href="https://www.roblox.com/communities/5502618/Hapless-Studios#!/about" target="_blank">Connect to Group ↗</a>
+          </div>
+        </div>
+
+        <h2>Initialization</h2>
+        <div class="grid">
+          
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Spawn Tools</span>
+              <span class="badge badge-req">Required</span>
+            </div>
+            <div class="card-desc">Equips the F3X toolset to your local character.</div>
+            <div class="code-block">
+              <span class="code-cmd">!bt</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Create Plot</span>
+            </div>
+            <div class="card-desc">Requests a new plot boundary in valid coordinates.</div>
+            <div class="code-block">
+              <span class="code-cmd">!createplot</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Rotation</span>
+            </div>
+            <div class="card-desc">Rotates the active plot orientation.</div>
+            <div class="code-block">
+              <span class="code-cmd">!rotateplot 90</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Clear Plot</span>
+              <span class="badge badge-destructive">Save Before Doing This</span>
+            </div>
+            <div class="card-desc">Purges all assets within the active plot area.</div>
+            <div class="code-block">
+              <span class="code-cmd">!clearplot</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Remove Plot</span>
+            </div>
+            <div class="card-desc">Unregisters current plot claim from the server.</div>
+            <div class="code-block">
+              <span class="code-cmd">!removeplot</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Storage</span>
+            </div>
+            <div class="card-desc">Opens the cloud storage interface for plot saving.</div>
+            <div class="code-block">
+              <span class="code-cmd">!sg</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- F3X PAGE -->
+      <div id="f3x" class="page">
+        <h2>Keybindings</h2>
+        <div class="grid">
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Move</span>
+              <span class="key">Z</span>
+            </div>
+            <div class="card-desc">Axis translation. Suggested increment: 0.05.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Resize</span>
+              <span class="key">X</span>
+            </div>
+            <div class="card-desc">Object scaling. Suggested increment: 0.05.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Rotate</span>
+              <span class="key">C</span>
+            </div>
+            <div class="card-desc">Angular manipulation of parts.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Create</span>
+              <span class="key">J</span>
+            </div>
+            <div class="card-desc">Spawn new primitive geometry instances.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Paint</span>
+              <span class="key">V</span>
+            </div>
+            <div class="card-desc">Apply Color3 properties to the selection.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Material</span>
+              <span class="key">N</span>
+            </div>
+            <div class="card-desc">Apply material textures to the selection.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Physics</span>
+              <span class="key">K</span>
+            </div>
+            <div class="card-desc">Toggle CanCollide state for selections.</div>
+          </div>
+          
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Surface</span>
+              <span class="key">G</span>
+            </div>
+            <div class="card-desc">Map IDs to specific object faces.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Mesh</span>
+              <span class="key">H</span>
+            </div>
+            <div class="card-desc">Import external MeshId data.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Light</span>
+              <span class="key">L</span>
+            </div>
+            <div class="card-desc">Instance Point, Spot, or Surface lights.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MY BUILDS PAGE -->
+      <div id="mybuilds" class="page">
+        <h2>My Builds & Projects</h2>
+        
+        <div class="gallery-card">
+          <div class="gallery-viewer">
+            <img id="galleryImage" class="gallery-image" src="" alt="Haunted House">
+            <div class="gallery-controls">
+              <button class="gallery-btn" onclick="prevImage()">← Prev</button>
+              <span class="gallery-counter" id="imageCounter">1/3</span>
+              <button class="gallery-btn" onclick="nextImage()">Next →</button>
+            </div>
+          </div>
+          <div class="gallery-info">
+            <div class="gallery-header">
+              <div>
+                <div class="gallery-title">Haunted House</div>
+              </div>
+              <div class="gallery-stats">
+                <span class="stat-badge">🔑 9 Keys</span>
+                <span class="stat-badge">📦 1,479 Parts</span>
+              </div>
+            </div>
+            <div class="gallery-desc">Just a detailed build i've been working on in my free-time, i dont really play town that much anymore so i haven't been able to finish it.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- OTHER PEOPLES BUILDS PAGE -->
+      <div id="otherbuilds" class="page">
+        <h2>Other Peoples Builds</h2>
+        
+        <div class="card" style="margin-bottom: 24px; animation-delay: 0.05s;">
+          <div class="card-top">
+            <span class="card-title">Submit Your Build</span>
+            <span class="badge badge-info">Open</span>
+          </div>
+          <div class="card-desc">
+            Nothing here yet! Want to showcase your build?
+            <br><br>
+            Add <strong>@depentict</strong> on Roblox — I automatically accept all friend requests. I'll rate your build 1-10, and if I like it, I'll feature it!
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ABOUT PAGE -->
+      <div id="about" class="page">
+        <h2>About Me</h2>
+        
+        <div class="about-section">
+          <div class="about-header">
+            <div class="about-avatar">K</div>
+            <div class="about-details">
+              <h3>depentict</h3>
+              <div class="age">16 turning 17</div>
+            </div>
+          </div>
+          <div class="about-bio">
+            Hi, I'm <strong>depentict</strong> / <strong>Kent</strong> (my name's Kent). I'm basically a no-life F3X dev / wirer + scripter... and that's it lol!
+            <br><br>
+            I spend most of my time building environments, working on complex wiring systems, and scripting various mechanics in Roblox. If you want to connect or collaborate, feel free to add me on Roblox — I accept all requests!
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <div>Town Documentation Utility</div>
+        <div>Build 2026.01 // @depentict</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Image gallery data
+    const images = [
+      'image1.png',
+      'image2.png',
+      'image3.png'
+    ];
+    let currentImageIndex = 0;
+
+    // Initialize gallery
+    function updateGalleryImage() {
+      const img = document.getElementById('galleryImage');
+      const counter = document.getElementById('imageCounter');
+      img.src = images[currentImageIndex];
+      counter.textContent = `${currentImageIndex + 1}/${images.length}`;
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      updateGalleryImage();
+    }
+
+    function prevImage() {
+      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+      updateGalleryImage();
+    }
+
+    // Initialize on load
+    updateGalleryImage();
+
+    // Tab switching
+    function switchTab(id, el) {
+      const pages = document.querySelectorAll('.page');
+      const buttons = document.querySelectorAll('.nav-btn');
+      
+      // Update Button state
+      buttons.forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      
+      // Tab switching with reset of animations
+      pages.forEach(p => {
+        p.classList.remove('active');
+        if(p.id === id) {
+          p.classList.add('active');
+          // Re-trigger staggered animation
+          const cards = p.querySelectorAll('.card, .gallery-card, .about-section');
+          cards.forEach((c, i) => {
+            c.style.animation = 'none';
+            c.offsetHeight; // trigger reflow
+            c.style.animation = '';
+          });
+        }
+      });
+    }
+
+    // Modal handling
+    function closeModal() {
+      document.getElementById('welcomeModal').classList.add('hidden');
+      localStorage.setItem('townDocsVisited', 'true');
+    }
+
+    // Check if user has visited before
+    window.addEventListener('DOMContentLoaded', () => {
+      const hasVisited = localStorage.getItem('townDocsVisited');
+      if (hasVisited) {
+        document.getElementById('welcomeModal').classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>
