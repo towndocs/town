@@ -117,7 +117,7 @@
 
     /* --- SIDEBAR --- */
     .sidebar {
-      width: 260px;
+      width: 280px;
       background: var(--sidebar);
       border-right: 1px solid var(--border);
       display: flex;
@@ -132,7 +132,7 @@
       font-weight: 600;
       font-size: 14px;
       color: var(--text-primary);
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -147,6 +147,33 @@
       color: #fff;
     }
 
+    /* Search Bar */
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      width: 100%;
+      background: #0f0f0f;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--font-ui);
+      transition: all 0.2s var(--transition);
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--border-hover);
+      background: #121212;
+    }
+
+    .search-box::placeholder {
+      color: var(--text-tertiary);
+    }
+
     .nav-label {
       font-size: 11px;
       font-weight: 600;
@@ -155,6 +182,10 @@
       margin-bottom: 8px;
       padding-left: 12px;
       letter-spacing: 0.05em;
+    }
+
+    .nav-label:not(:first-of-type) {
+      margin-top: 16px;
     }
 
     .nav-btn {
@@ -194,7 +225,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -214,13 +245,22 @@
     }
 
     h2 {
-      font-size: 16px;
-      font-weight: 500;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text-primary);
       margin: 48px 0 20px 0;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
       animation: fadeIn 0.8s var(--transition);
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin: 32px 0 16px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     /* --- DATA GRID --- */
@@ -240,6 +280,10 @@
       display: flex;
       flex-direction: column;
       animation: cardPop 0.4s var(--transition) both;
+    }
+
+    .card.hidden {
+      display: none;
     }
 
     .card:hover {
@@ -318,7 +362,6 @@
       letter-spacing: 0.02em;
     }
 
-    /* Standardized Required Badge */
     .badge-req {
       background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
@@ -336,6 +379,12 @@
       color: var(--text-tertiary);
     }
 
+    .badge-gamepass {
+      background: rgba(59, 130, 246, 0.1);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
     a {
       color: var(--text-primary);
       text-decoration: none;
@@ -348,119 +397,24 @@
       color: #fff;
     }
 
-    /* --- IMAGE GALLERY --- */
-    .gallery-card {
+    /* --- INFO BOX --- */
+    .info-box {
       background: var(--card-bg);
       border: 1px solid var(--border);
+      border-left: 3px solid #60a5fa;
       border-radius: var(--radius);
-      padding: 0;
-      overflow: hidden;
-      transition: all 0.3s var(--transition);
-      animation: cardPop 0.4s var(--transition) both;
-    }
-
-    .gallery-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
-    }
-
-    .gallery-viewer {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
-      overflow: hidden;
-    }
-
-    .gallery-image {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      animation: imageZoom 0.3s var(--transition);
-    }
-
-    @keyframes imageZoom {
-      from { opacity: 0; transform: scale(1.05); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .gallery-controls {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      padding: 8px 12px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .gallery-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 500;
-      transition: all 0.2s var(--transition);
-    }
-
-    .gallery-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .gallery-counter {
-      color: #fff;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      font-family: var(--font-mono);
-    }
-
-    .gallery-info {
       padding: 20px;
+      margin-bottom: 24px;
     }
 
-    .gallery-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .gallery-title {
-      font-weight: 500;
-      font-size: 16px;
+    .info-box-title {
+      font-weight: 600;
+      font-size: 14px;
       color: var(--text-primary);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
-    .gallery-stats {
-      display: flex;
-      gap: 8px;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    .stat-badge {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 4px 10px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-secondary);
-      font-family: var(--font-mono);
-    }
-
-    .gallery-desc {
+    .info-box-content {
       font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.6;
@@ -518,6 +472,18 @@
       line-height: 1.7;
     }
 
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+      display: none;
+    }
+
+    .no-results.show {
+      display: block;
+    }
+
     /* --- ANIMATIONS --- */
     @keyframes slideDown {
       from { opacity: 0; transform: translateY(-10px); }
@@ -535,12 +501,12 @@
     }
 
     /* Staggered Grid Item Animations */
-    .grid > div:nth-child(1) { animation-delay: 0.1s; }
-    .grid > div:nth-child(2) { animation-delay: 0.15s; }
-    .grid > div:nth-child(3) { animation-delay: 0.2s; }
-    .grid > div:nth-child(4) { animation-delay: 0.25s; }
-    .grid > div:nth-child(5) { animation-delay: 0.3s; }
-    .grid > div:nth-child(6) { animation-delay: 0.35s; }
+    .grid > div:nth-child(1) { animation-delay: 0.05s; }
+    .grid > div:nth-child(2) { animation-delay: 0.1s; }
+    .grid > div:nth-child(3) { animation-delay: 0.15s; }
+    .grid > div:nth-child(4) { animation-delay: 0.2s; }
+    .grid > div:nth-child(5) { animation-delay: 0.25s; }
+    .grid > div:nth-child(6) { animation-delay: 0.3s; }
 
     /* --- PAGE LOGIC --- */
     .page {
@@ -562,6 +528,37 @@
       padding-bottom: 40px;
     }
 
+    /* --- CUSTOM SCROLLBAR --- */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 5px;
+      border: 2px solid var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3a3a3a;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+      background: #4a4a4a;
+    }
+
+    /* Firefox scrollbar */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #2a2a2a var(--bg);
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       body {
@@ -577,10 +574,6 @@
 
       .content {
         padding: 32px 24px;
-      }
-
-      .gallery-viewer {
-        aspect-ratio: 4/3;
       }
     }
   </style>
@@ -599,15 +592,44 @@
   <div class="sidebar">
     <div class="brand">Town Docs <span>v2.0</span></div>
     
-    <div class="nav-label">General</div>
-    <button class="nav-btn active" onclick="switchTab('plots', this)">Plots & Commands</button>
-    
-    <div class="nav-label" style="margin-top: 16px;">Tools</div>
-    <button class="nav-btn" onclick="switchTab('f3x', this)">F3X Reference</button>
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" class="search-box" id="searchBox" placeholder="Search commands, weapons, items...">
+    </div>
 
-    <div class="nav-label" style="margin-top: 16px;">Other</div>
-    <button class="nav-btn" onclick="switchTab('mybuilds', this)">My Builds + Projects</button>
-    <button class="nav-btn" onclick="switchTab('otherbuilds', this)">Other Peoples Builds</button>
+    <div class="nav-label">Building</div>
+    <button class="nav-btn active" onclick="switchTab('plots', this)">Plot Commands</button>
+    <button class="nav-btn" onclick="switchTab('f3x', this)">F3X Keybindings</button>
+    
+    <div class="nav-label">Commands</div>
+    <button class="nav-btn" onclick="switchTab('cmd-general', this)">General Commands</button>
+    <button class="nav-btn" onclick="switchTab('cmd-cosmetic', this)">Cosmetic Commands</button>
+    <button class="nav-btn" onclick="switchTab('cmd-loadout', this)">Loadout Commands</button>
+    <button class="nav-btn" onclick="switchTab('cmd-vip', this)">VIP Server Commands</button>
+    
+    <div class="nav-label">Weapons</div>
+    <button class="nav-btn" onclick="switchTab('wpn-ar', this)">Assault Rifles</button>
+    <button class="nav-btn" onclick="switchTab('wpn-br', this)">Battle Rifles</button>
+    <button class="nav-btn" onclick="switchTab('wpn-dmr', this)">DMRs</button>
+    <button class="nav-btn" onclick="switchTab('wpn-sniper', this)">Sniper Rifles</button>
+    <button class="nav-btn" onclick="switchTab('wpn-lmg', this)">Light Machine Guns</button>
+    <button class="nav-btn" onclick="switchTab('wpn-smg', this)">Submachine Guns</button>
+    <button class="nav-btn" onclick="switchTab('wpn-shotgun', this)">Shotguns</button>
+    <button class="nav-btn" onclick="switchTab('wpn-handgun', this)">Handguns</button>
+    <button class="nav-btn" onclick="switchTab('wpn-melee', this)">Melee Weapons</button>
+    <button class="nav-btn" onclick="switchTab('wpn-other', this)">Other Weapons</button>
+
+    <div class="nav-label">Modifications</div>
+    <button class="nav-btn" onclick="switchTab('mod-sights', this)">Scopes & Sights</button>
+    <button class="nav-btn" onclick="switchTab('mod-grips', this)">Grips</button>
+    <button class="nav-btn" onclick="switchTab('mod-barrel', this)">Barrel Attachments</button>
+    <button class="nav-btn" onclick="switchTab('mod-other', this)">Other Attachments</button>
+    
+    <div class="nav-label">Equipment</div>
+    <button class="nav-btn" onclick="switchTab('armor', this)">Armor</button>
+    <button class="nav-btn" onclick="switchTab('utilities', this)">Utilities</button>
+
+    <div class="nav-label">Other</div>
     <button class="nav-btn" onclick="switchTab('about', this)">About Me</button>
   </div>
 
@@ -625,74 +647,115 @@
             <span class="badge badge-req">Required</span>
           </div>
           <div class="card-desc">
-            Membership in the Hapless Studios is mandatory for btools (f3x)
+            Membership in Hapless Studios is mandatory for btools (f3x).
             <br><br>
             <a href="https://www.roblox.com/communities/5502618/Hapless-Studios#!/about" target="_blank">Join Group ↗</a>
           </div>
         </div>
 
-        <h2>Initialization</h2>
+        <h2>Plot Commands</h2>
         <div class="grid">
           
-          <div class="card">
+          <div class="card" data-search="spawn tools btools bt required equips f3x toolset">
             <div class="card-top">
               <span class="card-title">Spawn Tools</span>
               <span class="badge badge-req">Required</span>
             </div>
             <div class="card-desc">Equips the F3X toolset to your local character.</div>
             <div class="code-block">
-              <span class="code-cmd">!bt</span>
+              <span class="code-cmd">!bt / !btools</span>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-search="create plot pc plotcreate creates new">
             <div class="card-top">
               <span class="card-title">Create Plot</span>
             </div>
-            <div class="card-desc">Creates a new plot directly where the player is</div>
+            <div class="card-desc">Creates a new plot directly where the player is.</div>
             <div class="code-block">
-              <span class="code-cmd">!createplot</span>
+              <span class="code-cmd">!pc / !plotcreate</span>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-search="rotation rotateplot rtp rotate orientation">
             <div class="card-top">
               <span class="card-title">Rotation</span>
             </div>
-            <div class="card-desc">Rotates the active plot orientation.</div>
+            <div class="card-desc">Rotates the active plot orientation. Must clear plot first.</div>
             <div class="code-block">
-              <span class="code-cmd">!rotateplot 90</span>
+              <span class="code-cmd">!rotateplot / !rtp</span>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-search="clear plot clearplot clp delete parts save first">
             <div class="card-top">
               <span class="card-title">Clear Plot</span>
-              <span class="badge badge-destructive">Save Before Doing This</span>
+              <span class="badge badge-destructive">Save First</span>
             </div>
-            <div class="card-desc">Purges all assets within the active plot area.</div>
+            <div class="card-desc">Deletes all parts on your plot without deleting the plot.</div>
             <div class="code-block">
-              <span class="code-cmd">!clearplot</span>
+              <span class="code-cmd">!clearplot / !clp</span>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-search="remove plot removeplot rmp unregister claim">
             <div class="card-top">
               <span class="card-title">Remove Plot</span>
             </div>
             <div class="card-desc">Unregisters current plot claim from the server.</div>
             <div class="code-block">
-              <span class="code-cmd">!removeplot</span>
+              <span class="code-cmd">!removeplot / !rmp</span>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-search="storage sg savegui save plot interface">
             <div class="card-top">
               <span class="card-title">Storage</span>
             </div>
-            <div class="card-desc">Opens the Plot storage interface for plot saving.</div>
+            <div class="card-desc">Opens the plot storage interface for saving.</div>
             <div class="code-block">
-              <span class="code-cmd">!sg</span>
+              <span class="code-cmd">!sg / !savegui</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="plot trust pt ptrust player modify allow">
+            <div class="card-top">
+              <span class="card-title">Plot Trust</span>
+            </div>
+            <div class="card-desc">Allows another player to modify your plot.</div>
+            <div class="code-block">
+              <span class="code-cmd">!pt / !ptrust [player]</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="plot position plotposition pp shows location">
+            <div class="card-top">
+              <span class="card-title">Plot Position</span>
+            </div>
+            <div class="card-desc">Shows the position of your current plot.</div>
+            <div class="code-block">
+              <span class="code-cmd">!plotposition / !pp</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="clear outside parts clearoutsideparts cop delete glitched">
+            <div class="card-top">
+              <span class="card-title">Clear Outside Parts</span>
+              <span class="badge badge-destructive">Use Carefully</span>
+            </div>
+            <div class="card-desc">Deletes parts that glitched outside your plot. May break builds.</div>
+            <div class="code-block">
+              <span class="code-cmd">!clearoutsideparts / !cop</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="quick save ns plot name without gui">
+            <div class="card-top">
+              <span class="card-title">Quick Save</span>
+            </div>
+            <div class="card-desc">Saves the plot without opening save GUI. Do !uwc before using.</div>
+            <div class="code-block">
+              <span class="code-cmd">!ns [Plot Name]</span>
             </div>
           </div>
 
@@ -701,7 +764,7 @@
 
       <!-- F3X PAGE -->
       <div id="f3x" class="page">
-        <h2>Keybindings</h2>
+        <h2>F3X Keybindings</h2>
         <div class="grid">
 
           <div class="card">
@@ -787,49 +850,341 @@
         </div>
       </div>
 
-      <!-- MY BUILDS PAGE -->
-      <div id="mybuilds" class="page">
-        <h2>My Builds & Projects</h2>
-        
-        <div class="gallery-card">
-          <div class="gallery-viewer">
-            <img id="galleryImage" class="gallery-image" src="" alt="Haunted House">
-            <div class="gallery-controls">
-              <button class="gallery-btn" onclick="prevImage()">← Prev</button>
-              <span class="gallery-counter" id="imageCounter">1/3</span>
-              <button class="gallery-btn" onclick="nextImage()">Next →</button>
+      <!-- GENERAL COMMANDS PAGE -->
+      <div id="cmd-general" class="page">
+        <h2>General Commands</h2>
+        <div class="grid">
+          
+          <div class="card" data-search="rules server opens">
+            <div class="card-top">
+              <span class="card-title">Rules</span>
+            </div>
+            <div class="card-desc">Opens the server rules.</div>
+            <div class="code-block">
+              <span class="code-cmd">!rules</span>
             </div>
           </div>
-          <div class="gallery-info">
-            <div class="gallery-header">
-              <div>
-                <div class="gallery-title">Haunted House</div>
-              </div>
-              <div class="gallery-stats">
-                <span class="stat-badge">🔑 9 Keys</span>
-                <span class="stat-badge">📦 1,479 Parts</span>
-              </div>
+
+          <div class="card" data-search="commands list cmds menu available all">
+            <div class="card-top">
+              <span class="card-title">Commands List</span>
             </div>
-            <div class="gallery-desc">Just a detailed build i've been working on in my free-time, i dont really play town that much anymore so i haven't been able to finish it.
+            <div class="card-desc">Opens a menu with all available commands.</div>
+            <div class="code-block">
+              <span class="code-cmd">!cmds</span>
             </div>
+          </div>
+
+          <div class="card" data-search="passive mode p toggle pvp">
+            <div class="card-top">
+              <span class="card-title">Passive Mode</span>
+            </div>
+            <div class="card-desc">Toggles passive mode on/off.</div>
+            <div class="code-block">
+              <span class="code-cmd">!p / !passive</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="bodycam bc axon body camera effect">
+            <div class="card-top">
+              <span class="card-title">Bodycam</span>
+            </div>
+            <div class="card-desc">Toggles AXON BODY 3 bodycam effect.</div>
+            <div class="code-block">
+              <span class="code-cmd">!bc / !bodycam</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="load map lm loadmap baseplate different">
+            <div class="card-top">
+              <span class="card-title">Load Map</span>
+            </div>
+            <div class="card-desc">Loads different maps (e.g., !lm baseplate).</div>
+            <div class="code-block">
+              <span class="code-cmd">!lm / !loadmap [map]</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="vote kick vk votekick player gamepass shovel">
+            <div class="card-top">
+              <span class="card-title">Vote Kick</span>
+              <span class="badge badge-gamepass">Shovel Pass</span>
+            </div>
+            <div class="card-desc">Starts a vote kick on specified player.</div>
+            <div class="code-block">
+              <span class="code-cmd">!vk / !votekick [player]</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- COSMETIC COMMANDS PAGE -->
+      <div id="cmd-cosmetic" class="page">
+        <h2>Cosmetic Commands</h2>
+        <div class="grid">
+          
+          <div class="card" data-search="hat id gamepass shovel equips">
+            <div class="card-top">
+              <span class="card-title">Hat</span>
+              <span class="badge badge-gamepass">Shovel Pass</span>
+            </div>
+            <div class="card-desc">Equips a hat by ID.</div>
+            <div class="code-block">
+              <span class="code-cmd">!hat [Hat ID]</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="shirt id gamepass shovel equips clothing">
+            <div class="card-top">
+              <span class="card-title">Shirt</span>
+              <span class="badge badge-gamepass">Shovel Pass</span>
+            </div>
+            <div class="card-desc">Equips a shirt by ID.</div>
+            <div class="code-block">
+              <span class="code-cmd">!shirt [Shirt ID]</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="pants id gamepass shovel equips clothing">
+            <div class="card-top">
+              <span class="card-title">Pants</span>
+              <span class="badge badge-gamepass">Shovel Pass</span>
+            </div>
+            <div class="card-desc">Equips pants by ID.</div>
+            <div class="code-block">
+              <span class="code-cmd">!pants [Pants ID]</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- LOADOUT COMMANDS PAGE -->
+      <div id="cmd-loadout" class="page">
+        <h2>Loadout Commands</h2>
+        <div class="info-box">
+          <div class="info-box-title">Creating Weapon & Tool Spawning Loadouts</div>
+          <div class="info-box-content">
+            These commands help you naturally spawn with your preferred weapons without having to spawn everything back again.
           </div>
         </div>
 
+        <div class="grid">
+          
+          <div class="card" data-search="set spawn sts setspawn loadout weapon ready">
+            <div class="card-top">
+              <span class="card-title">Set Spawn</span>
+            </div>
+            <div class="card-desc">Spawns with ready loadout. Example: !sts SAS+Hunting+Redlaser ballisticsvest balaclava</div>
+            <div class="code-block">
+              <span class="code-cmd">!sts / !setspawn</span>
+            </div>
+          </div>
+
+          <div class="card" data-search="set armor sta armorname loadout spawn">
+            <div class="card-top">
+              <span class="card-title">Set Armor</span>
+            </div>
+            <div class="card-desc">Spawns you with the armor you want. Example: !sta riot</div>
+            <div class="code-block">
+              <span class="code-cmd">!sta [armorname]</span>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <!-- OTHER PEOPLES BUILDS PAGE -->
-      <div id="otherbuilds" class="page">
-        <h2>Other Peoples Builds</h2>
-        
-        <div class="card" style="margin-bottom: 24px; animation-delay: 0.05s;">
-          <div class="card-top">
-            <span class="card-title">Submit Your Build</span>
-            <span class="badge badge-info">Open</span>
+      <!-- VIP SERVER COMMANDS PAGE -->
+      <div id="cmd-vip" class="page">
+        <h2>VIP Server Commands</h2>
+        <div class="grid" id="vip-commands-grid"></div>
+      </div>
+
+      <!-- WEAPON PAGES -->
+      <div id="wpn-ar" class="page">
+        <h2>Assault Rifles</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Assault rifles are the most flexible class of weapon in-game, dominating medium-short range combat and balancing range, damage, and fire rate.
           </div>
-          <div class="card-desc">
-            Nothing here yet! Want to showcase your build?
-            <br><br>
-            Add <strong>@depentict</strong> on Roblox — I automatically accept all friend requests. I'll rate your build 1-10, and if I like it, I'll feature it!
+        </div>
+        <div class="grid" id="weapons-ar"></div>
+      </div>
+
+      <div id="wpn-br" class="page">
+        <h2>Battle Rifles</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Battle Rifles fire fully powered cartridges for maximum stopping power at the cost of recoil and fire rate.
+          </div>
+        </div>
+        <div class="grid" id="weapons-br"></div>
+      </div>
+
+      <div id="wpn-dmr" class="page">
+        <h2>Designated Marksman Rifles</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            DMRs serve as an in-between for assault rifles and sniper rifles, offering forgiving fire rate with precision.
+          </div>
+        </div>
+        <div class="grid" id="weapons-dmr"></div>
+      </div>
+
+      <div id="wpn-sniper" class="page">
+        <h2>Sniper Rifles</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            High range and damage dominate long-range field. Low fire-rate and slow reload. Aim sway present.
+          </div>
+        </div>
+        <div class="grid" id="weapons-sniper"></div>
+      </div>
+
+      <div id="wpn-lmg" class="page">
+        <h2>Light Machine Guns</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Heavy automatic weapons with high magazine capacity for sustained fire at the cost of mobility.
+          </div>
+        </div>
+        <div class="grid" id="weapons-lmg"></div>
+      </div>
+
+      <div id="wpn-smg" class="page">
+        <h2>Submachine Guns</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Pistol-caliber weapons with high fire rates and excellent mobility. Excel in close quarters.
+          </div>
+        </div>
+        <div class="grid" id="weapons-smg"></div>
+      </div>
+
+      <div id="wpn-shotgun" class="page">
+        <h2>Shotguns</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Trade accuracy and range for sheer stopping power. Can penetrate riot shields.
+          </div>
+        </div>
+        <div class="grid" id="weapons-shotgun"></div>
+      </div>
+
+      <div id="wpn-handgun" class="page">
+        <h2>Handguns</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Secondary weapons that are light and concealable. Can be dual-wielded. Revolvers included.
+          </div>
+        </div>
+        <div class="grid" id="weapons-handgun"></div>
+      </div>
+
+      <div id="wpn-melee" class="page">
+        <h2>Melee Weapons</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Very low range but don't use ammo and ignore armor. Can hit through walls.
+          </div>
+        </div>
+        <div class="grid" id="weapons-melee"></div>
+      </div>
+
+      <div id="wpn-other" class="page">
+        <h2>Other Weapons</h2>
+        <div class="grid" id="weapons-other"></div>
+      </div>
+
+      <!-- MODIFICATION PAGES -->
+      <div id="mod-sights" class="page">
+        <h2>Scopes & Sights</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Equip a weapon and press <strong>V</strong> to attach modifications.
+          </div>
+        </div>
+        <div class="grid" id="mods-sights"></div>
+      </div>
+
+      <div id="mod-grips" class="page">
+        <h2>Grips</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Equip a weapon and press <strong>V</strong> to attach modifications.
+          </div>
+        </div>
+        <div class="grid" id="mods-grips"></div>
+      </div>
+
+      <div id="mod-barrel" class="page">
+        <h2>Barrel Attachments</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Equip a weapon and press <strong>V</strong> to attach modifications.
+          </div>
+        </div>
+        <div class="grid" id="mods-barrel"></div>
+      </div>
+
+      <div id="mod-other" class="page">
+        <h2>Other Attachments</h2>
+        <div class="info-box">
+          <div class="info-box-content">
+            Equip a weapon and press <strong>V</strong> to attach modifications.
+          </div>
+        </div>
+        <div class="grid" id="mods-other"></div>
+      </div>
+
+      <!-- ARMOR PAGE -->
+      <div id="armor" class="page">
+        
+        <div class="info-box">
+          <div class="info-box-title">Armor Command</div>
+          <div class="info-box-content">
+            Use <strong>!spawnarmor</strong> or <strong>!sa (item)</strong> to equip armor sets.
+          </div>
+        </div>
+
+        <h2>Armor Sets</h2>
+        <div class="grid" id="armor-sets"></div>
+
+        <h2>Individual Armor Pieces</h2>
+        <div class="grid" id="armor-pieces"></div>
+
+      </div>
+
+      <!-- UTILITIES PAGE -->
+      <div id="utilities" class="page">
+        
+        <h2>Utility Items</h2>
+        <div class="grid" id="utility-items"></div>
+
+        <h2>Drone</h2>
+        <div class="info-box">
+          <div class="info-box-title">Drone Controls</div>
+          <div class="info-box-content">
+            <strong>Y</strong> - Toggle speaking through the drone<br>
+            <strong>R</strong> - Alert<br>
+            <strong>T</strong> - Shoot<br>
+            <strong>F</strong> - Flashlight<br>
+            <strong>Z</strong> - Reset drone rotation<br>
+            <strong>Q</strong> - Up<br>
+            <strong>E</strong> - Down<br>
+            Move your cursor to the ends of your screen to turn.
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="card-top">
+              <span class="card-title">Laptop</span>
+            </div>
+            <div class="card-desc">Control interface for drone operations.</div>
+            <div class="code-block">
+              <span class="code-cmd">!s Laptop</span>
+            </div>
           </div>
         </div>
 
@@ -864,67 +1219,382 @@
   </div>
 
   <script>
-    // Image gallery data
-    const images = [
-      'image1.png',
-      'image2.png',
-      'image3.png'
+    // ===== DATA =====
+    const weaponsData = {
+      ar: [
+        {name: 'AK-47', cmd: 'AK-47'},
+        {name: 'AK-15', cmd: 'ak-15'},
+        {name: 'AUG A3', cmd: 'AUGA3'},
+        {name: 'ShAK-12', cmd: 'ShAK-12', gamepass: true},
+        {name: 'FAIL', cmd: 'FAIL', gamepass: true},
+        {name: 'FAMAS G2', cmd: 'FAMASG2'},
+        {name: 'Groza-4', cmd: 'Groza-4', gamepass: true},
+        {name: 'G36C', cmd: 'G36C'},
+        {name: 'HK416', cmd: 'HK416'},
+        {name: 'L85A2', cmd: 'L85A2'},
+        {name: 'M16A2', cmd: 'M16A2'},
+        {name: 'M4 Carbine', cmd: 'M4'},
+        {name: 'MCX', cmd: 'MCX'},
+        {name: 'QBZ-95', cmd: 'QBZ-95'},
+        {name: 'SG-552 Commando', cmd: 'SG-552'},
+        {name: 'SOPMOD Block II', cmd: 'SOPMODBlockII'},
+        {name: 'Tumor Growth', cmd: 'TumorGrowth'},
+        {name: 'AS VAL', cmd: 'ASVAL'}
+      ],
+      br: [
+        {name: 'G3A3', cmd: 'G3A3'},
+        {name: 'M1 Garand', cmd: 'M1Garand'},
+        {name: 'MK 17 CQC', cmd: 'MK17CQC'},
+        {name: 'RFB', cmd: 'RFB'},
+        {name: 'SCAR-H', cmd: 'SCAR-H', gamepass: true},
+        {name: 'FN FAL', cmd: 'FnFal', gamepass: true}
+      ],
+      dmr: [
+        {name: 'Dragunov SVD', cmd: 'DragunovSVD'},
+        {name: 'QBU-88', cmd: 'QBU-88'},
+        {name: 'MK-11', cmd: 'MK-11'},
+        {name: 'M110', cmd: 'M110'},
+        {name: 'AR-10', cmd: 'AR-10'},
+        {name: 'AR-15', cmd: 'AR-15'},
+        {name: 'HW Spear', cmd: 'HWSpear'},
+        {name: 'SKS', cmd: 'SKS'}
+      ],
+      sniper: [
+        {name: 'CheyTac M200', cmd: 'CheyTacM200'},
+        {name: 'JNG-90', cmd: 'JNG-90'},
+        {name: 'L96A1', cmd: 'L96A1'},
+        {name: 'Lee Enfield', cmd: 'LeeEnfield'},
+        {name: 'R700', cmd: 'R700'},
+        {name: 'Steyr Elite', cmd: 'SteyrElite'},
+        {name: 'Walther WA2000', cmd: 'WaltherWA2000', gamepass: true},
+        {name: 'Intervention', cmd: 'Intervention'},
+        {name: 'Barrett M82A3', cmd: 'BarrettM82A3', gamepass: true},
+        {name: 'GM6 Lynx', cmd: 'GM6Lynx', gamepass: true}
+      ],
+      lmg: [
+        {name: 'MG4', cmd: 'MG4'},
+        {name: 'RPK', cmd: 'RPK'},
+        {name: 'RPK-74', cmd: 'RPK-74M'},
+        {name: 'Lewis Automatic Rifle', cmd: 'Lewis'}
+      ],
+      smg: [
+        {name: 'HW Jolt', cmd: 'hw', gamepass: true},
+        {name: 'Kriss Vector', cmd: 'KRISSVector', gamepass: true},
+        {name: 'M1921 Thompson', cmd: 'M1921Thompson', gamepass: true},
+        {name: 'MP40', cmd: 'MP40'},
+        {name: 'MP5A2', cmd: 'MP5A2'},
+        {name: 'MP7', cmd: 'MP7'},
+        {name: 'MPX', cmd: 'MPX'},
+        {name: 'PP2000', cmd: 'PP2000', gamepass: true},
+        {name: 'P90', cmd: 'P90'},
+        {name: 'Scorpion EVO', cmd: 'ScorpionEVO', gamepass: true},
+        {name: 'SR-2', cmd: 'SR-2'},
+        {name: 'UMP-45', cmd: 'UMP-45'},
+        {name: 'Uzi', cmd: 'Uzi'},
+        {name: 'PPSH-41', cmd: 'PPSH-41'},
+        {name: 'AG-18c', cmd: 'AG-18c'},
+        {name: 'MAC-10', cmd: 'MAC-10'},
+        {name: 'MP5K', cmd: 'MP5K'},
+        {name: 'TMP', cmd: 'TMP'}
+      ],
+      shotgun: [
+        {name: 'Double Barrel', cmd: 'DoubleBarrel', gamepass: true},
+        {name: 'HW Pulper', cmd: 'HWPulper', gamepass: true},
+        {name: 'Ithaca 37 Stakeout', cmd: 'Ithaca37Stakeout', gamepass: true},
+        {name: 'Olympia', cmd: 'Olympia', gamepass: true},
+        {name: 'M26 MASS', cmd: 'M26MASS', gamepass: true},
+        {name: 'M870', cmd: 'M870'},
+        {name: 'Saiga-12K', cmd: 'SAIGA', gamepass: true},
+        {name: 'SPAS-12', cmd: 'SPAS-12', gamepass: true},
+        {name: 'UTS-15', cmd: 'UTS-15', gamepass: true},
+        {name: 'Pipe Shotgun', cmd: 'pipeshotgun'}
+      ],
+      handgun: [
+        {name: 'AG-19', cmd: 'AG-19'},
+        {name: 'Classic Pistol', cmd: 'ClassicPistol', gamepass: true},
+        {name: 'CZ-75', cmd: 'CZ-75'},
+        {name: 'Cowboy Gun', cmd: 'CowboyGun', gamepass: true},
+        {name: 'Desert Eagle', cmd: 'DesertEagle'},
+        {name: 'Five SeveN', cmd: 'FiveSeven'},
+        {name: 'HW Cappa', cmd: 'hwcappa'},
+        {name: 'Luger P08', cmd: 'LugerP08', gamepass: true},
+        {name: 'Magnum Revolver', cmd: 'MagnumRevolver'},
+        {name: 'Makarov', cmd: 'Makarov'},
+        {name: 'MP443', cmd: 'MP443'},
+        {name: 'M1911', cmd: 'M1911'},
+        {name: 'M9', cmd: 'M9'},
+        {name: 'P226', cmd: 'P226'},
+        {name: 'Python', cmd: 'Python'},
+        {name: 'UNICA 6', cmd: 'UNICA6', gamepass: true},
+        {name: 'RMK2', cmd: 'RMK2'},
+        {name: 'USP MK23', cmd: 'mk23'},
+        {name: 'USP Match', cmd: 'USPMatch'}
+      ],
+      melee: [
+        {name: 'Fire Axe', cmd: 'Fireaxe'},
+        {name: 'Hammer', cmd: 'Hammer'},
+        {name: 'Pickaxe', cmd: 'Pickaxe'},
+        {name: 'Shovel', cmd: 'Shovel', gamepass: true}
+      ],
+      other: [
+        {name: 'Model 1777 Musket', cmd: 'Model1777Musket'},
+        {name: 'Bryson Repeater', cmd: 'brysonrepeater'},
+        {name: 'Saddlegun', cmd: 'saddlegun'},
+        {name: 'Honey Badger', cmd: 'HoneyBadger'},
+        {name: 'Riot Shield', cmd: 'RiotShield', gamepass: true}
+      ]
+    };
+
+    const modsData = {
+      sights: [
+        {name: 'Coyote Sight', cmd: 'CoyoteSight'},
+        {name: 'Hunting Scope', cmd: 'HuntingScope'},
+        {name: 'ACOG Sight', cmd: 'ACOGSight'},
+        {name: 'Reflex', cmd: 'Reflex'},
+        {name: 'CL6X Sight', cmd: 'CL6XSight'},
+        {name: 'EOTech Sight', cmd: 'EOTechSight'},
+        {name: 'JGM4 Sight', cmd: 'JGM4Sight'},
+        {name: 'Kobra Sight', cmd: 'KobraSight'},
+        {name: 'PSO-1 Scope', cmd: 'PSO-1Scope'},
+        {name: 'Holosun 507c', cmd: 'Holosun507c'},
+        {name: 'Acog Scope', cmd: 'AcogScope'},
+        {name: 'M145', cmd: 'M145'},
+        {name: 'AEMS', cmd: 'AEMS'},
+        {name: 'SRS', cmd: 'SRS'}
+      ],
+      grips: [
+        {name: 'Angled Grip', cmd: 'AngledGrip'},
+        {name: 'Folding Grip', cmd: 'FoldingGrip'},
+        {name: 'Hera', cmd: 'hera'},
+        {name: 'Offset', cmd: 'offset'},
+        {name: 'Bipod', cmd: 'Bipod'},
+        {name: 'Extended Stock', cmd: 'ExtendedStock', desc: 'For SMGs and pistols only'},
+        {name: 'DD Grip', cmd: 'DDGrip'},
+        {name: 'Ergo Grip', cmd: 'ErgoGrip'},
+        {name: 'Strike', cmd: 'Strike'},
+        {name: 'Seelite', cmd: 'Seelite'},
+        {name: 'Skeleton', cmd: 'skeleton'}
+      ],
+      barrel: [
+        {name: 'Compensator', cmd: 'Compensator'},
+        {name: 'MK23', cmd: 'mk23'},
+        {name: 'Flash Hider', cmd: 'FlashHider'},
+        {name: 'Osprey Suppressor', cmd: 'OspreySuppresor'},
+        {name: 'Heavy Suppressor', cmd: 'HeavySuppressor'},
+        {name: 'Suppressor', cmd: 'Suppressor'},
+        {name: 'Wide Choke', cmd: 'WideChoke'},
+        {name: 'Muzzle Brake', cmd: 'Muzzlebrake'},
+        {name: 'TAA Muzzle Brake', cmd: 'TAAMuzzlebrake'}
+      ],
+      other: [
+        {name: 'Flashlight', cmd: 'Flashlight'},
+        {name: 'Blue Laser', cmd: 'BlueLaser'},
+        {name: 'Green Laser', cmd: 'GreenLaser'},
+        {name: 'Red Laser', cmd: 'RedLaser'},
+        {name: 'Range Finder', cmd: 'RangeFinder'},
+        {name: 'NGAL', cmd: 'Ngal', gamepass: true, desc: 'Flashlight and laser combo. Hit G to toggle.'}
+      ]
+    };
+
+    const armorData = {
+      sets: [
+        {name: 'COM', cmd: 'COM'},
+        {name: 'FBI', cmd: 'FBI'},
+        {name: 'SWAT', cmd: 'SWAT'},
+        {name: 'HCS', cmd: 'HCS'},
+        {name: 'Riot', cmd: 'Riot'},
+        {name: 'Robes', cmd: 'Robes'},
+        {name: 'Robes 2', cmd: 'Robes2'},
+        {name: 'Slav', cmd: 'Slav'},
+        {name: 'Tenor', cmd: 'Tenor'},
+        {name: 'SAS', cmd: 'SAS'},
+        {name: 'GRU', cmd: 'GRU'},
+        {name: 'RGF', cmd: 'RGF'},
+        {name: 'VDV', cmd: 'VDV'},
+        {name: 'Ghillie', cmd: 'ghillie'},
+        {name: 'Britain', cmd: 'Britan'},
+        {name: 'Pa', cmd: 'Pa'},
+        {name: 'Rusky', cmd: 'Rusky', gamepass: true, desc: 'Requires donation gamepass.'}
+      ],
+      pieces: [
+        {name: 'Ballistics Vest', cmd: 'BallisticsVest'},
+        {name: 'Ballistics Helmet', cmd: 'BallisticsHelmet'},
+        {name: 'Balaclava', cmd: 'Balaclava', desc: 'Hides username.'}
+      ]
+    };
+
+    const utilityData = [
+      {name: 'Bandage', cmd: 'Bandage'},
+      {name: 'Defibrillator', cmd: 'Defibrillator'},
+      {name: 'Gas Mask', cmd: 'GasMask', desc: 'Cosmetic only.'},
+      {name: 'Medkit', cmd: 'Medkit'},
+      {name: 'NV Goggles', cmd: 'NVGoggles', desc: 'Press N to toggle night vision.'},
+      {name: 'Wrench', cmd: 'Wrench', desc: 'Repairs armor and vehicles.'}
     ];
-    let currentImageIndex = 0;
 
-    // Initialize gallery
-    function updateGalleryImage() {
-      const img = document.getElementById('galleryImage');
-      const counter = document.getElementById('imageCounter');
-      img.src = images[currentImageIndex];
-      counter.textContent = `${currentImageIndex + 1}/${images.length}`;
+    const vipCommands = [
+      {name: 'Admin', cmd: 'admin', desc: 'Grants admin permissions.'},
+      {name: 'Kick', cmd: 'kick [player]', desc: 'Kicks a player from the server.'},
+      {name: 'Time', cmd: 't / time', desc: 'Sets the time of day.'},
+      {name: 'Toggle Time', cmd: 'tt / toggletime', desc: 'Toggles time progression.'},
+      {name: 'Team', cmd: 'team [player] [team]', desc: 'Assigns players to teams.'},
+      {name: 'Spawn Tools', cmd: 'spawntools', desc: 'Spawns building tools for players.'},
+      {name: 'Toggle Meshes', cmd: 'tms / togglemeshes', desc: 'Toggles mesh visibility.'},
+      {name: 'Toggle Weather', cmd: 'twt / toggleweather', desc: 'Toggles weather effects.'},
+      {name: 'Refill', cmd: 'rf / refill', desc: 'Refills ammo for all players.'},
+      {name: 'Heal', cmd: 'h / heal', desc: 'Heals all players.'},
+      {name: 'Toggle Ammo', cmd: 'ta / toggleammo', desc: 'Toggles infinite ammo.'},
+      {name: 'Spawn Mags', cmd: 'sm / spawnmags', desc: 'Spawns magazines.'},
+      {name: 'Spawn Bot', cmd: 'sb / spawnbot', desc: 'Spawns an AI bot.'},
+      {name: 'Kill Bots', cmd: 'kb / killbots', desc: 'Kills all bots.'},
+      {name: 'Clean Bots', cmd: 'cb / cleanbots', desc: 'Removes all bots.'},
+      {name: 'Toggle Bots', cmd: 'tb / togglebots', desc: 'Toggles bot spawning.'},
+      {name: 'Clean Gibs', cmd: 'cg / cleangibs', desc: 'Cleans up body parts.'},
+      {name: 'Spawn Wave', cmd: 'sw / spawnwave', desc: 'Spawns an enemy wave.'},
+      {name: 'Toggle Waves', cmd: 'tw / togglewaves', desc: 'Toggles wave spawning.'},
+      {name: 'Toggle BGM', cmd: 'tb / togglebgm', desc: 'Toggles background music.'},
+      {name: 'Toggle Ambient', cmd: 'ta / toggleamb', desc: 'Toggles ambient sounds.'},
+      {name: 'Set Damage', cmd: 'sd / setdamage', desc: 'Sets damage multiplier.'},
+      {name: 'Set Friendly Fire', cmd: 'sf / setff', desc: 'Toggles friendly fire.'},
+      {name: 'Toggle Respawn', cmd: 'tr / togglerespawn', desc: 'Toggles respawning.'},
+      {name: 'Suspend', cmd: 'suspend [player]', desc: 'Suspends a player.'},
+      {name: 'Toggle Mature', cmd: 'tmt / togglemature', desc: 'Toggles mature content filter.'}
+    ];
+
+    // ===== HELPER FUNCTIONS =====
+    function createCard(item, cmdPrefix = '!s') {
+      const badge = item.gamepass ? '<span class="badge badge-gamepass">Gamepass</span>' : '';
+      const desc = item.desc || '';
+      const searchData = `${item.name.toLowerCase()} ${item.cmd.toLowerCase()} ${desc.toLowerCase()}`;
+      return `
+        <div class="card" data-search="${searchData}">
+          <div class="card-top">
+            <span class="card-title">${item.name}</span>
+            ${badge}
+          </div>
+          ${desc ? `<div class="card-desc">${desc}</div>` : ''}
+          <div class="code-block">
+            <span class="code-cmd">${cmdPrefix}${item.cmd}</span>
+          </div>
+        </div>
+      `;
     }
 
-    function nextImage() {
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      updateGalleryImage();
+    function populateSection(sectionId, items, cmdPrefix = '!s') {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      section.innerHTML = items.map(item => createCard(item, cmdPrefix)).join('');
     }
 
-    function prevImage() {
-      currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-      updateGalleryImage();
-    }
+    // ===== POPULATE ALL SECTIONS =====
+    populateSection('weapons-ar', weaponsData.ar);
+    populateSection('weapons-br', weaponsData.br);
+    populateSection('weapons-dmr', weaponsData.dmr);
+    populateSection('weapons-sniper', weaponsData.sniper);
+    populateSection('weapons-lmg', weaponsData.lmg);
+    populateSection('weapons-smg', weaponsData.smg);
+    populateSection('weapons-shotgun', weaponsData.shotgun);
+    populateSection('weapons-handgun', weaponsData.handgun);
+    populateSection('weapons-melee', weaponsData.melee);
+    populateSection('weapons-other', weaponsData.other);
 
-    // Initialize on load
-    updateGalleryImage();
+    populateSection('mods-sights', modsData.sights);
+    populateSection('mods-grips', modsData.grips);
+    populateSection('mods-barrel', modsData.barrel);
+    populateSection('mods-other', modsData.other);
 
-    // Tab switching
+    populateSection('armor-sets', armorData.sets, '!sa ');
+    populateSection('armor-pieces', armorData.pieces);
+
+    populateSection('utility-items', utilityData);
+    populateSection('vip-commands-grid', vipCommands, '!');
+
+    // ===== SEARCH FUNCTIONALITY =====
+    const searchBox = document.getElementById('searchBox');
+    let currentActivePage = 'plots';
+    
+    searchBox.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      if (searchTerm === '') {
+        // Show all cards when search is empty and restore current page
+        document.querySelectorAll('.card').forEach(card => {
+          card.classList.remove('hidden');
+        });
+        
+        // Show only the currently active page
+        document.querySelectorAll('.page').forEach(page => {
+          page.classList.remove('active');
+        });
+        document.getElementById(currentActivePage).classList.add('active');
+        return;
+      }
+
+      // When searching, show ALL pages and filter cards
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.add('active');
+      });
+
+      // Search through all cards
+      const allCards = document.querySelectorAll('.card[data-search]');
+      let foundAny = false;
+
+      allCards.forEach(card => {
+        const searchData = card.getAttribute('data-search');
+        if (searchData && searchData.includes(searchTerm)) {
+          card.classList.remove('hidden');
+          foundAny = true;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Hide pages that have no visible cards
+      document.querySelectorAll('.page').forEach(page => {
+        const visibleCards = page.querySelectorAll('.card:not(.hidden)');
+        if (visibleCards.length === 0) {
+          page.classList.remove('active');
+        }
+      });
+    });
+
+    // ===== TAB SWITCHING =====
     function switchTab(id, el) {
       const pages = document.querySelectorAll('.page');
       const buttons = document.querySelectorAll('.nav-btn');
       
-      // Update Button state
+      // Store current active page
+      currentActivePage = id;
+      
+      // Clear search when switching tabs
+      searchBox.value = '';
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('hidden');
+      });
+      
       buttons.forEach(b => b.classList.remove('active'));
       el.classList.add('active');
       
-      // Tab switching with reset of animations
       pages.forEach(p => {
         p.classList.remove('active');
         if(p.id === id) {
           p.classList.add('active');
-          // Re-trigger staggered animation
-          const cards = p.querySelectorAll('.card, .gallery-card, .about-section');
+          const cards = p.querySelectorAll('.card, .about-section, .info-box');
           cards.forEach((c, i) => {
             c.style.animation = 'none';
-            c.offsetHeight; // trigger reflow
+            c.offsetHeight;
             c.style.animation = '';
           });
         }
       });
     }
 
-    // Modal handling
+    // ===== MODAL =====
     function closeModal() {
       document.getElementById('welcomeModal').classList.add('hidden');
       localStorage.setItem('townDocsVisited', 'true');
     }
 
-    // Check if user has visited before
     window.addEventListener('DOMContentLoaded', () => {
       const hasVisited = localStorage.getItem('townDocsVisited');
       if (hasVisited) {
